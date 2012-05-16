@@ -21,6 +21,7 @@ In your environment file <tt>config/environments/development.rb</tt> configure i
   config.action_mailer.delivery_method = :safety_mailer
   config.action_mailer.safety_mailer_settings = {
     allowed_matchers: [ /mydomain.com/, /mytestacct@gmail.com/, /super_secret_test/ ],
+    forward_to: [ 'someone@example.com' ]
     delivery_method: :smtp,
     delivery_method_settings: {
       :address => "smtp.mydomain.com",
@@ -33,7 +34,12 @@ In your environment file <tt>config/environments/development.rb</tt> configure i
   }
 
 ... and now, email to anyone@mydomain.com, mytestacct@gmail.com, bob+super_secret_test@yahoo.com all get sent
-and email to other recipients (like the real users in the production database you copied to a test server) is suppressed.
+and email to other recipients (like the real users in the production database
+you copied to a test server) is suppressed and be redirected to `forward_to`
+email (if any).
+
+You can also disable the safety_mailer dynamically by setting the environment
+variable `DISABLE_SAFETY_MAILER=true`
 
 == Non-Rails
 
